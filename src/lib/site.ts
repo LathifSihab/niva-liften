@@ -1,5 +1,6 @@
 // Site content. Every fact here comes from the client's presentation (see PROJECT_PLAN.md §7).
 // `null` = not supplied yet; components render it as the visible placeholder.
+import { photos, type Photo } from './photos.ts';
 
 export const PLACEHOLDER = '[input volgt]';
 
@@ -58,16 +59,25 @@ export type Project = {
 	location: string | null;
 	category: 'Modernisering' | 'Nieuwbouw' | 'Onderhoud' | null;
 	scope: string | null;
+	photo: Photo;
 	featured?: boolean;
 };
 
 export const projects: Project[] = [
-	{ name: "VvE 's Gravenhof", location: 'Roermond', category: null, scope: null, featured: true },
+	{
+		name: "VvE 's Gravenhof",
+		location: 'Roermond',
+		category: null,
+		scope: null,
+		photo: photos.projectGravenhof,
+		featured: true
+	},
 	{
 		name: 'Student Hotel',
 		location: null,
 		category: 'Modernisering',
 		scope: '7× modernisering compleet',
+		photo: photos.projectStudentHotel,
 		featured: true
 	},
 	{
@@ -75,11 +85,30 @@ export const projects: Project[] = [
 		location: 'Bergen op Zoom',
 		category: 'Nieuwbouw',
 		scope: '10 nieuwe liften',
+		photo: photos.projectStadlander,
 		featured: true
 	},
-	{ name: 'Meander', location: 'Arnhem', category: null, scope: null },
-	{ name: 'Eetvilla', location: 'Rosmalen', category: null, scope: null },
-	{ name: 'Huisartsenpraktijk', location: 'Boxtel', category: null, scope: null }
+	{
+		name: 'Meander',
+		location: 'Arnhem',
+		category: null,
+		scope: null,
+		photo: photos.projectMeander
+	},
+	{
+		name: 'Eetvilla',
+		location: 'Rosmalen',
+		category: null,
+		scope: null,
+		photo: photos.projectEetvilla
+	},
+	{
+		name: 'Huisartsenpraktijk',
+		location: 'Boxtel',
+		category: null,
+		scope: null,
+		photo: photos.projectHuisartsenpraktijk
+	}
 ];
 
 export const team = ['Hasan Koç', 'Mario Leijen', 'Ebad Hashemi'];

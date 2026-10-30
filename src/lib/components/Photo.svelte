@@ -20,7 +20,7 @@
 		decoding="async"
 	/>
 	<figcaption class="small">
-		Foto: <a href={photo.credit.source}>{photo.credit.author}</a>,
+		Voorbeeldfoto · <a href={photo.credit.source}>{photo.credit.author}</a>,
 		<a href={photo.credit.licenseUrl}>{photo.credit.license}</a>
 	</figcaption>
 </figure>

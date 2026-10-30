@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { PLACEHOLDER, type Project } from '#lib/site.ts';
-	import PhotoPlaceholder from './PhotoPlaceholder.svelte';
+	import Photo from './Photo.svelte';
 
 	let { project, level = 3 }: { project: Project; level?: 2 | 3 } = $props();
 </script>
 
 <article class="project">
-	<PhotoPlaceholder alt="Project {project.name}" />
+	<Photo photo={project.photo} />
 	<p class="label">
 		{#if project.location}{project.location}{:else}<span class="placeholder">{PLACEHOLDER}</span>{/if}
 	</p>

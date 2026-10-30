@@ -3,7 +3,6 @@
 	import NewsItem from '#lib/components/NewsItem.svelte';
 	import Phone from '#lib/components/Phone.svelte';
 	import Photo from '#lib/components/Photo.svelte';
-	import PhotoPlaceholder from '#lib/components/PhotoPlaceholder.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
 	import { posts } from '#lib/nieuws.ts';
 	import { photos } from '#lib/photos.ts';
@@ -192,7 +191,7 @@
 				{/each}
 			</ul>
 		</div>
-		<PhotoPlaceholder alt="Het team van Nivå Liften bij de bedrijfsbussen" ratio="3 / 2" />
+		<Photo photo={photos.liftMotorRoom} ratio="3 / 2" />
 	</div>
 </section>
 

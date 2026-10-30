@@ -16,14 +16,14 @@ Marketing website for **Nivå Liften** (lift maintenance, repair, modernisation,
 - Use only the colour tokens in DESIGN_SYSTEM.md §3. Amber (`--color-signal`) is for 24/7 storing only.
 - Plain CSS with tokens. No Tailwind, no component library, no new dependency without saying why.
 - Prefer HTML/CSS and SvelteKit built-ins over client JS. Pages are prerendered; only `/contact` runs on the worker. Every interactive bit must work with JS off or degrade cleanly.
-- Images: real Nivå photos from `src/assets/`; never AI-generated or stock lift cabins. Demo only: free-licence photos (Wikimedia Commons etc.) in generic slots via `src/lib/photos.ts`, credited on the page. Never as Nivå's team or projects, never with another lift brand's logo visible.
+- Images: real Nivå photos from `src/assets/`; never AI-generated or stock lift cabins. Demo only: free-licence photos (Wikimedia Commons etc.) via `src/lib/photos.ts`, each captioned "Voorbeeldfoto" with its credit. No photos of people as Nivå's team, never another lift brand's logo visible.
 - Accessibility: semantic HTML, visible focus, alt text in Dutch, `prefers-reduced-motion` respected, 360px wide works.
 - Before calling a page done: DESIGN_SYSTEM.md §10 checklist + `/ponytail-review`.
 
 ## Stack (docs/adr/0001)
 SvelteKit 3 + Svelte 5, `adapter-cloudflare`, mdsvex for `src/content/nieuws/*.md`. No database.
 - Kit 3: config lives in `vite.config.ts` (`sveltekit({...})`), there is no `svelte.config.js`. Import shared code as `#lib/...` with an explicit `.ts` extension (`$lib` no longer exists).
-- Content facts live in `src/lib/site.ts`; `null` renders as `[input volgt]`. Missing photos use `PhotoPlaceholder`.
+- Content facts live in `src/lib/site.ts`; `null` renders as `[input volgt]`. Photos and their credits live in `src/lib/photos.ts`.
 
 ## Commands
 ```bash
