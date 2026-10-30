@@ -1,0 +1,11 @@
+// Cloudflare Workers + static assets. Prerendered pages are served as assets;
+// only /contact (form action) runs in the worker.
+{
+	"name": "niva-liften",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2026-10-01",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	}
+}
