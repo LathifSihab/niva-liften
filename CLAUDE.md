@@ -16,7 +16,7 @@ Marketing website for **Nivå Liften** (lift maintenance, repair, modernisation,
 - Use only the colour tokens in DESIGN_SYSTEM.md §3. Amber (`--color-signal`) is for 24/7 storing only.
 - Plain CSS with tokens. No Tailwind, no component library, no new dependency without saying why.
 - Prefer HTML/CSS and SvelteKit built-ins over client JS. Pages are prerendered; only `/contact` runs on the worker. Every interactive bit must work with JS off or degrade cleanly.
-- Images: real Nivå photos from `src/assets/`; never AI-generated or stock lift cabins.
+- Images: real Nivå photos from `src/assets/`; never AI-generated or stock lift cabins. Demo only: free-licence photos (Wikimedia Commons etc.) in generic slots via `src/lib/photos.ts`, credited on the page. Never as Nivå's team or projects, never with another lift brand's logo visible.
 - Accessibility: semantic HTML, visible focus, alt text in Dutch, `prefers-reduced-motion` respected, 360px wide works.
 - Before calling a page done: DESIGN_SYSTEM.md §10 checklist + `/ponytail-review`.
 

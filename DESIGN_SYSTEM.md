@@ -171,7 +171,7 @@ Navy background. Three groups max: contact (address, phone, e-mail, KvK), dienst
 
 - Icons only where they carry meaning (phone, 24/7, download). Use a handful of inline SVGs (1.5px stroke, square caps to match the square logo) at text colour; no full icon library (a default `lucide` import is itself an AI-design tell). **No icons in coloured rounded squares.**
 - Photo treatment: natural colour, slight cool grade. No blue overlays over every image. Dark gradient only where white text sits on a photo, and only at the bottom third.
-- Image sources (demo): extracted from the presentation PDF. Production: ask for originals/high-res and permission per image.
+- Image sources (demo): free-licence photos of lift machinery (Wikimedia Commons, CC BY-SA) for the hero and Modernisering page, with a visible credit line under each. Team and project slots stay placeholders: a stock photo there would misrepresent Nivå. Production: real Nivå originals, permission per image.
 
 ---
 

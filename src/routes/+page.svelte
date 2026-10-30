@@ -2,9 +2,11 @@
 	import FloorLabel from '#lib/components/FloorLabel.svelte';
 	import NewsItem from '#lib/components/NewsItem.svelte';
 	import Phone from '#lib/components/Phone.svelte';
+	import Photo from '#lib/components/Photo.svelte';
 	import PhotoPlaceholder from '#lib/components/PhotoPlaceholder.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
 	import { posts } from '#lib/nieuws.ts';
+	import { photos } from '#lib/photos.ts';
 	import { brands, projects, services, stats, team, PLACEHOLDER } from '#lib/site.ts';
 
 	const reasons = [
@@ -69,7 +71,7 @@
 				</a>
 			</div>
 		</div>
-		<PhotoPlaceholder alt="Monteur van Nivå aan het werk in de liftschacht" />
+		<Photo photo={photos.liftMachine} eager />
 	</div>
 </section>
 

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import PhotoPlaceholder from '#lib/components/PhotoPlaceholder.svelte';
+	import Photo from '#lib/components/Photo.svelte';
+	import { photos } from '#lib/photos.ts';
 	import { suppliers } from '#lib/site.ts';
 
 	const parts = [
@@ -31,7 +32,7 @@
 				<a class="button button-primary" href="/contact">Modernisering bespreken</a>
 			</div>
 		</div>
-		<PhotoPlaceholder alt="Nieuwe besturingskast in een liftmachinekamer" />
+		<Photo photo={photos.controllerCabinets} eager />
 	</div>
 </section>
 
