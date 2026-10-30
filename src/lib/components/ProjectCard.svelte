@@ -1,30 +1,33 @@
 <!-- Photo tile with a dark caption bar, as in the client's mockup ("Recente projecten") -->
 <script lang="ts">
-	import { PLACEHOLDER, type Project } from '#lib/site.ts';
+	import type { Project } from '#lib/content.ts';
+	import { photoOf } from '#lib/content.svelte.ts';
+	import { PLACEHOLDER } from '#lib/site.ts';
 	import PhotoCredit from './PhotoCredit.svelte';
 
 	let { project, level = 3 }: { project: Project; level?: 2 | 3 } = $props();
+	let photo = $derived(photoOf(project.photo));
 </script>
 
 <article class="project">
 	<div class="tile">
 		<img
-			src={project.photo.src}
-			alt={project.photo.alt}
-			width={project.photo.width}
-			height={project.photo.height}
+			src={photo.src}
+			alt={photo.alt}
+			width={photo.width}
+			height={photo.height}
 			loading="lazy"
 			decoding="async"
 		/>
 		<div class="bar">
 			<p class="label">
-				{project.category ?? ''}{project.category ? ' · ' : ''}{project.location ?? PLACEHOLDER}
+				{project.category} · {project.location || PLACEHOLDER}
 			</p>
 			<svelte:element this={`h${level}`} class="name">{project.name}</svelte:element>
-			<p class="scope">{project.scope ?? PLACEHOLDER}</p>
+			<p class="scope">{project.scope || PLACEHOLDER}</p>
 		</div>
 	</div>
-	<p class="credit"><PhotoCredit photo={project.photo} /></p>
+	<p class="credit"><PhotoCredit {photo} /></p>
 </article>
 
 <style>

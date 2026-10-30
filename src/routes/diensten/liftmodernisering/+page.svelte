@@ -1,65 +1,42 @@
 <script lang="ts">
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import ServiceCards from '#lib/components/ServiceCards.svelte';
-	import { photos } from '#lib/photos.ts';
-	import { parts, projects } from '#lib/site.ts';
+	import Text from '#lib/components/Text.svelte';
+	import { content } from '#lib/content.svelte.ts';
 
-	const modernisering = projects.filter((p) => p.category === 'Modernisering');
+	let page = $derived(content.data.pages.liftmodernisering);
+	let modernisering = $derived(content.data.projects.filter((p) => p.category === 'Modernisering'));
 </script>
 
-<svelte:head>
-	<title>Liftmodernisering | Nivå Liften</title>
-	<meta
-		name="description"
-		content="Liftmodernisering door Nivå Liften: besturing, machine, deuren en tableaus vernieuwen in plaats van de hele lift vervangen. 60–70 moderniseringen per jaar, voor elk merk."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.controllerCabinets}>
-	<div class="hero-intro">
-		<p class="label">Diensten</p>
-		<h1>Liftmodernisering</h1>
-		<p class="lead">
-			Renoveren in plaats van vervangen. Nivå moderniseert 60 tot 70 liften per jaar, van alle
-			merken.
-		</p>
-		<a class="button button-primary" href="/contact?type=Modernisering">Modernisering bespreken</a>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="section tight" aria-labelledby="intro-title">
 	<div class="container two-col">
 		<div>
-			<h2 id="intro-title">Geef uw lift een tweede leven</h2>
-			<p class="lead">
-				Een verouderde lift hoeft niet in zijn geheel te worden vervangen. Niet elk onderdeel
-				veroudert even snel: wij vervangen wat nodig is en houden wat nog goed is.
-			</p>
-			<p>
-				Worden alle hoofdcomponenten vernieuwd, dan spreken wij van een complete modernisering. Zo
-				moderniseerden wij zeven liften van Student Hotel volledig.
-			</p>
+			<h2 id="intro-title"><Text text={page.intro.title} /></h2>
+			<p class="lead"><Text text={page.intro.lead} /></p>
+			<p><Text text={page.intro.text} /></p>
 		</div>
 		<div class="card card-body">
-			<p class="label">Marktvrije onderdelen</p>
-			<p>
-				Wij kiezen voor marktvrije componenten: onderdelen die elk liftbedrijf kan onderhouden. Zo
-				zit u na de modernisering niet vast aan één merk of leverancier.
-			</p>
+			<p class="label">{page.intro.cardLabel}</p>
+			<p><Text text={page.intro.cardText} /></p>
 		</div>
 	</div>
 </section>
 
 <section class="section tight surface" aria-labelledby="parts-title">
 	<div class="container">
-		<h2 id="parts-title" class="section-title">Wat wij <strong>vernieuwen</strong></h2>
+		<h2 id="parts-title" class="section-title"><Text text={page.parts.title} /></h2>
 		<ul class="plain-list parts">
-			{#each parts as part (part.title)}
+			{#each page.parts.items as part, i (i)}
 				<li class="card card-body">
 					<h3>{part.title}</h3>
-					<p>{part.text}</p>
+					<p><Text text={part.text} /></p>
 					<p class="label suppliers">{part.suppliers.join(' · ')}</p>
 				</li>
 			{/each}
@@ -69,9 +46,9 @@
 
 <section class="section tight" aria-labelledby="projecten-title">
 	<div class="container">
-		<h2 id="projecten-title" class="section-title">Modernisering <strong>projecten</strong></h2>
+		<h2 id="projecten-title" class="section-title"><Text text={page.projectsTitle} /></h2>
 		<div class="three-up">
-			{#each modernisering as project (project.name)}
+			{#each modernisering as project, i (i)}
 				<ProjectCard {project} />
 			{/each}
 		</div>
@@ -80,17 +57,12 @@
 
 <section class="section tight surface" aria-labelledby="andere-title">
 	<div class="container">
-		<h2 id="andere-title" class="section-title">Andere <strong>diensten</strong></h2>
+		<h2 id="andere-title" class="section-title"><Text text={page.otherTitle} /></h2>
 		<ServiceCards exclude="/diensten/liftmodernisering" />
 	</div>
 </section>
 
-<CtaBand
-	primary={{ label: 'Modernisering bespreken', href: '/contact?type=Modernisering' }}
-	secondary={{ label: 'Offerte aanvragen', href: '/contact?type=Modernisering' }}
->
-	{#snippet title()}Is uw lift <strong>verouderd</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={page.cta} />
 
 <style>
 	.parts {

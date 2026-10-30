@@ -8,7 +8,7 @@
 </script>
 
 <ul class="plain-list checks" class:center class:single={columns === 1} style:--columns={columns}>
-	{#each items as item (item)}
+	{#each items as item, i (i)}
 		<li>
 			<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
 				<path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2" stroke-linecap="square" />

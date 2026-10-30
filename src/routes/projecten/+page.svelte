@@ -1,39 +1,33 @@
 <script lang="ts">
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
-	import { photos } from '#lib/photos.ts';
-	import { projects } from '#lib/site.ts';
+	import Seo from '#lib/components/Seo.svelte';
+	import { content } from '#lib/content.svelte.ts';
+
+	let page = $derived(content.data.pages.projecten);
 
 	// Grouped as in the Bedrijfspresentatie: "Onze projecten 2024 – 2025"
-	const groups = (['Modernisering', 'Nieuwbouw'] as const).map((category) => ({
-		category,
-		items: projects.filter((p) => p.category === category)
-	}));
+	let groups = $derived(
+		(['Modernisering', 'Nieuwbouw', 'Onderhoud'] as const)
+			.map((category) => ({
+				category,
+				items: content.data.projects.filter((p) => p.category === category)
+			}))
+			.filter((group) => group.items.length)
+	);
 </script>
 
-<svelte:head>
-	<title>Projecten | Nivå Liften</title>
-	<meta
-		name="description"
-		content="Projecten van Nivå Liften 2024–2025: liftmodernisering en nieuwbouw voor VvE's, woningcorporaties en bedrijven."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.projectStadlander}>
-	<div class="hero-intro">
-		<p class="label">Projecten</p>
-		<h1>Onze projecten 2024 – 2025</h1>
-		<p class="lead">Een greep uit ons werk voor VvE's, woningcorporaties en bedrijven.</p>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 {#each groups as group, i (group.category)}
 	<section class="section tight" class:surface={i % 2 === 1} aria-labelledby="group-{i}">
 		<div class="container">
 			<h2 id="group-{i}" class="section-title"><strong>{group.category}</strong></h2>
 			<div class="three-up">
-				{#each group.items as project (project.name)}
+				{#each group.items as project, j (j)}
 					<ProjectCard {project} />
 				{/each}
 			</div>
@@ -41,6 +35,4 @@
 	</section>
 {/each}
 
-<CtaBand>
-	{#snippet title()}Een project <strong>bespreken</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={page.cta} />

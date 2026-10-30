@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { contact, PLACEHOLDER, services } from '#lib/site.ts';
+	import { content } from '#lib/content.svelte.ts';
+	import { PLACEHOLDER } from '#lib/site.ts';
+
+	let settings = $derived(content.data.settings);
 	import Phone from './Phone.svelte';
 </script>
 
@@ -8,13 +11,13 @@
 		<section aria-labelledby="footer-storing" class="storing">
 			<h2 id="footer-storing" class="label">24/7 storingsdienst</h2>
 			<p class="h2"><Phone /></p>
-			<p class="small">Storing of opsluiting? Wij zijn dag en nacht bereikbaar.</p>
+			<p class="small">{settings.footerStoring}</p>
 		</section>
 
 		<section aria-labelledby="footer-contact">
 			<h2 id="footer-contact" class="label">Contact</h2>
 			<dl>
-				{#each [['Adres', contact.address], ['E-mail', contact.email], ['KvK', contact.kvk]] as [term, value] (term)}
+				{#each [['Adres', settings.contact.address], ['E-mail', settings.contact.email], ['KvK', settings.contact.kvk]] as [term, value] (term)}
 					<div>
 						<dt class="visually-hidden">{term}</dt>
 						<dd>{#if value}{value}{:else}{term}: <span class="placeholder">{PLACEHOLDER}</span>{/if}</dd>
@@ -26,7 +29,7 @@
 		<nav aria-labelledby="footer-diensten">
 			<h2 id="footer-diensten" class="label">Diensten</h2>
 			<ul class="plain-list">
-				{#each services as service (service.title)}
+				{#each settings.services as service (service.href)}
 					<li>
 						{#if service.href}<a href={service.href}>{service.title}</a>{:else}{service.title}{/if}
 					</li>

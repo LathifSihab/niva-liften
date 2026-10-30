@@ -23,7 +23,8 @@ Marketing website for **Nivå Liften** (lift maintenance, repair, modernisation,
 ## Stack (docs/adr/0001)
 SvelteKit 3 + Svelte 5, `adapter-cloudflare`, mdsvex for `src/content/nieuws/*.md`. No database.
 - Kit 3: config lives in `vite.config.ts` (`sveltekit({...})`), there is no `svelte.config.js`. Import shared code as `#lib/...` with an explicit `.ts` extension (`$lib` no longer exists).
-- Content facts live in `src/lib/site.ts`; `null` renders as `[input volgt]`. Photos and their credits live in `src/lib/photos.ts`.
+- Content facts live in `src/lib/content.ts` (all page copy, settings, projects); an empty string renders as `[input volgt]`. Pages read it through the store in `src/lib/content.svelte.ts`, never directly. Photos and their credits live in `src/lib/photos.ts`.
+- `/admin` is the demo CMS: it edits that content, schema in `src/lib/cms-schema.ts`. Edits are kept in the browser (localStorage) and applied after hydration, so the prerendered HTML always has the defaults.
 
 ## Commands
 ```bash

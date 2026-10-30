@@ -1,19 +1,27 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import { nav } from '#lib/site.ts';
+	import { content } from '#lib/content.svelte.ts';
 	import Phone from './Phone.svelte';
 
 	// <details> keeps the mobile menu working without JS; JS only closes it after navigating.
 	let menuOpen = $state(false);
 	afterNavigate(() => (menuOpen = false));
 
+	// The menu item linking to the services section opens the four service pages
+	let nav = $derived(
+		content.data.settings.nav.map((item) => ({
+			...item,
+			children: item.href === '/#diensten' ? content.data.settings.services : undefined
+		}))
+	);
+
 	const isCurrent = (href: string) => !href.includes('#') && page.url.pathname.startsWith(href);
 </script>
 
 <div class="topbar on-dark small">
 	<div class="container topbar-inner">
-		<p>Merkonafhankelijk liftonderhoud sinds 2005</p>
+		<p>{content.data.settings.tagline}</p>
 		<p><span class="topbar-label">24/7 storingsdienst</span> <Phone /></p>
 	</div>
 </div>
@@ -27,7 +35,7 @@
 
 		<nav class="nav-desktop" aria-label="Hoofdmenu">
 			<ul class="plain-list">
-				{#each nav as item (item.href)}
+				{#each nav as item, i (i)}
 					<li class:has-sub={item.children}>
 						<a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
 							{item.label}
@@ -71,7 +79,7 @@
 			<div class="menu-panel on-dark">
 				<nav class="container" aria-label="Hoofdmenu mobiel">
 					<ul class="plain-list">
-						{#each nav as item (item.href)}
+						{#each nav as item, i (i)}
 							<li>
 								<a href={item.href}>{item.label}</a>
 								{#if item.children}

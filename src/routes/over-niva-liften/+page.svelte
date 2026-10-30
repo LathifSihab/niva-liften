@@ -1,35 +1,24 @@
 <script lang="ts">
 	import CheckList from '#lib/components/CheckList.svelte';
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
-	import { photos } from '#lib/photos.ts';
-	import { clientReasons, growth, PLACEHOLDER, team, values } from '#lib/site.ts';
+	import Seo from '#lib/components/Seo.svelte';
+	import Text from '#lib/components/Text.svelte';
+	import { content } from '#lib/content.svelte.ts';
+
+	let page = $derived(content.data.pages.over);
+	let settings = $derived(content.data.settings);
 </script>
 
-<svelte:head>
-	<title>Over Nivå Liften | Lift onderhoud bedrijf sinds 2005</title>
-	<meta
-		name="description"
-		content="Nivå Liften is sinds 2005 een lift onderhoud bedrijf voor service, modernisering, reparatie en nieuwbouw. 25 medewerkers, 1.200 installaties, meer dan 700 klanten."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.projectGravenhof}>
-	<div class="hero-intro">
-		<p class="label">Over ons</p>
-		<h1>Over Nivå Liften</h1>
-		<p class="lead">
-			Service, modernisering, reparatie en nieuwbouw van liften. Sinds 2005, voor VvE's en
-			commerciële opdrachtgevers.
-		</p>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="section tight" aria-labelledby="groei-title">
 	<div class="container">
-		<h2 id="groei-title" class="section-title">Van 2005 tot <strong>nu</strong></h2>
+		<h2 id="groei-title" class="section-title"><Text text={page.growth.title} /></h2>
 		<ul class="plain-list three-up">
-			{#each growth as item (item.label)}
+			{#each page.growth.items as item, i (i)}
 				<li class="card card-body growth">
 					<p class="label">{item.label}</p>
 					<p class="display num">{item.now}</p>
@@ -42,24 +31,24 @@
 
 <section class="section tight surface" aria-label="Waar wij voor staan">
 	<div class="container">
-		<blockquote class="values h2">{values}</blockquote>
+		<blockquote class="values h2">{settings.values}</blockquote>
 	</div>
 </section>
 
 <section class="section tight" aria-labelledby="waarom-title">
 	<div class="container">
-		<h2 id="waarom-title" class="section-title">Waarom kiezen klanten voor <strong>Nivå</strong>?</h2>
+		<h2 id="waarom-title" class="section-title"><Text text={page.reasons.title} /></h2>
 		<div class="center">
-			<CheckList items={clientReasons} columns={1} />
+			<CheckList items={page.reasons.items} columns={1} />
 		</div>
 	</div>
 </section>
 
 <section class="section tight surface" aria-labelledby="directie-title">
 	<div class="container">
-		<h2 id="directie-title" class="section-title"><strong>Directie</strong></h2>
+		<h2 id="directie-title" class="section-title"><Text text={page.teamTitle} /></h2>
 		<ul class="plain-list three-up">
-			{#each team as member (member.name)}
+			{#each settings.team as member, i (i)}
 				<li class="card card-body member">
 					<h3>{member.name}</h3>
 					<p>{member.role}</p>
@@ -71,14 +60,12 @@
 
 <section class="section tight" aria-labelledby="verhaal-title">
 	<div class="container">
-		<h2 id="verhaal-title">Ons verhaal</h2>
-		<p class="lead"><span class="placeholder">{PLACEHOLDER}</span></p>
+		<h2 id="verhaal-title"><Text text={page.story.title} /></h2>
+		<p class="lead"><Text text={page.story.text} /></p>
 	</div>
 </section>
 
-<CtaBand>
-	{#snippet title()}Kennismaken met <strong>Nivå</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={page.cta} />
 
 <style>
 	.growth {

@@ -1,44 +1,23 @@
 <script lang="ts">
 	import CheckList from '#lib/components/CheckList.svelte';
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
 	import Phone from '#lib/components/Phone.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import ServiceCards from '#lib/components/ServiceCards.svelte';
-	import { photos } from '#lib/photos.ts';
+	import Text from '#lib/components/Text.svelte';
+	import { content } from '#lib/content.svelte.ts';
 
-	const promises = [
-		'24/7 bereikbaar',
-		'Eigen monteurs',
-		'Kennis van alle grote merken',
-		'Korte lijnen'
-	];
+	let page = $derived(content.data.pages.liftReparatie);
 </script>
 
-<svelte:head>
-	<title>Lift reparatie en storingen, 24/7 | Nivå Liften</title>
-	<meta
-		name="description"
-		content="Lift reparatie door Nivå Liften: storingsdienst 24/7 bereikbaar, eigen monteurs, voor alle merken liften."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.liftMachine}>
-	<div class="hero-intro">
-		<p class="label">Diensten</p>
-		<h1>Liftreparatie en storingen</h1>
-		<p class="lead">
-			Storing of opsluiting? Onze storingsdienst is 24/7 bereikbaar. Eigen monteurs, voor alle
-			merken.
-		</p>
-		<a class="button button-primary" href="/contact?type=Reparatie%20of%20storing">
-			Reparatie aanvragen
-		</a>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="storing on-dark" aria-labelledby="storing-title">
 	<div class="container storing-inner">
-		<h2 id="storing-title" class="h3">Bel direct onze 24/7 storingsdienst</h2>
+		<h2 id="storing-title" class="h3"><Text text={page.storingTitle} /></h2>
 		<p class="h2"><Phone /></p>
 	</div>
 </section>
@@ -46,15 +25,12 @@
 <section class="section tight" aria-labelledby="hulp-title">
 	<div class="container two-col">
 		<div>
-			<h2 id="hulp-title">Snelle hulp bij storingen en defecten</h2>
-			<p class="lead">
-				Een lift die stilstaat, raakt iedereen in het gebouw. Daarom is onze storingsdienst dag en
-				nacht bereikbaar, en werken wij met eigen monteurs die alle grote merken kennen.
-			</p>
+			<h2 id="hulp-title"><Text text={page.help.title} /></h2>
+			<p class="lead"><Text text={page.help.lead} /></p>
 		</div>
 		<div class="card card-body">
-			<p class="label">Daar kunt u op rekenen</p>
-			<CheckList items={promises} columns={1} />
+			<p class="label">{page.help.cardLabel}</p>
+			<CheckList items={page.help.items} columns={1} />
 		</div>
 	</div>
 </section>
@@ -62,30 +38,21 @@
 <section class="section tight surface" aria-labelledby="voorkomen-title">
 	<div class="container two-col">
 		<div>
-			<h2 id="voorkomen-title">Storingen voorkomen</h2>
-			<p>
-				Regelmatig <a href="/diensten/liftonderhoud">liftonderhoud</a> voorkomt veel storingen. Met
-				de SafetyBlueBox-module kan Nivå bovendien opsluitingen op afstand verhelpen: de lift wordt
-				via de smartphone naar een andere verdieping gestuurd en de deuren gaan open.
-			</p>
-			<p class="small note">Inmiddels zijn vijf installaties uitgerust met de module.</p>
+			<h2 id="voorkomen-title"><Text text={page.prevent.title} /></h2>
+			<p><Text text={page.prevent.text} /></p>
+			<p class="small note"><Text text={page.prevent.note} /></p>
 		</div>
 	</div>
 </section>
 
 <section class="section tight" aria-labelledby="andere-title">
 	<div class="container">
-		<h2 id="andere-title" class="section-title">Andere <strong>diensten</strong></h2>
+		<h2 id="andere-title" class="section-title"><Text text={page.otherTitle} /></h2>
 		<ServiceCards exclude="/diensten/lift-reparatie" />
 	</div>
 </section>
 
-<CtaBand
-	primary={{ label: 'Reparatie aanvragen', href: '/contact?type=Reparatie%20of%20storing' }}
-	secondary={{ label: 'Contact opnemen', href: '/contact' }}
->
-	{#snippet title()}Is uw lift <strong>defect</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={page.cta} />
 
 <style>
 	.storing {

@@ -1,29 +1,20 @@
 <script lang="ts">
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import NewsItem from '#lib/components/NewsItem.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
-	import { posts } from '#lib/nieuws.ts';
-	import { photos } from '#lib/photos.ts';
+	import Seo from '#lib/components/Seo.svelte';
+	import { content } from '#lib/content.svelte.ts';
+
+	let page = $derived(content.data.pages.nieuws);
 </script>
 
-<svelte:head>
-	<title>Nieuws | Nivå Liften</title>
-	<meta name="description" content="Nieuws en advies over liftonderhoud en liftmodernisering van Nivå Liften." />
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.modernisedLifts}>
-	<div class="hero-intro">
-		<p class="label">Nieuws</p>
-		<h1>Nieuws en advies</h1>
-		<p class="lead">
-			Nieuws van Nivå en praktisch advies over onderhoud en modernisering van uw lift.
-		</p>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="section tight">
 	<div class="container">
 		<div class="three-up">
-			{#each posts as post (post.slug)}
+			{#each content.posts as post (post.slug)}
 				<NewsItem {post} level={2} />
 			{/each}
 		</div>

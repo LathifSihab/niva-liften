@@ -32,6 +32,7 @@
 | Projecten overview (3 cases from the deck) | CMS / editor login |
 | Nieuws list + 1 example article | Redirect, DNS, e-mail changes |
 | Contact page with form (UI only, no sending) | Analytics, cookie banner |
+| Demo CMS at `/admin`: every page, news, projects, settings, photos, inbox. Edits live in that browser only | |
 | Responsive (360px → 1440px) | Multilingual |
 | Deployed on a shareable preview URL | Klantenportaal integration |
 

@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import PageHero from '#lib/components/PageHero.svelte';
-	import { photos } from '#lib/photos.ts';
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import Phone from '#lib/components/Phone.svelte';
+	import Seo from '#lib/components/Seo.svelte';
+	import Text from '#lib/components/Text.svelte';
 	import { liftBrands, requestTypes, type ContactField } from '#lib/contact.ts';
-	import { contact, PLACEHOLDER } from '#lib/site.ts';
+	import { content } from '#lib/content.svelte.ts';
+	import { PLACEHOLDER } from '#lib/site.ts';
 
 	let { data, form } = $props();
+	let page = $derived(content.data.pages.contact);
+	let contact = $derived(content.data.settings.contact);
 
 	const value = (field: ContactField) =>
 		form?.values?.[field] ?? (field === 'type' ? data.type : '');
@@ -14,13 +18,7 @@
 	const describedBy = (field: ContactField) => (error(field) ? `${field}-error` : undefined);
 </script>
 
-<svelte:head>
-	<title>Contact en onderhoud aanvragen | Nivå Liften</title>
-	<meta
-		name="description"
-		content="Neem contact op met Nivå Liften voor liftonderhoud, reparatie of liftmodernisering. Storing? Wij zijn 24/7 bereikbaar."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
 {#snippet fieldError(field: ContactField)}
 	{#if error(field)}
@@ -28,16 +26,7 @@
 	{/if}
 {/snippet}
 
-<PageHero photo={photos.liftDoors}>
-	<div class="hero-intro">
-		<p class="label">Contact</p>
-		<h1>Onderhoud aanvragen of een vraag stellen</h1>
-		<p class="lead">
-			Vul het formulier in, dan nemen wij contact met u op. Storing? Bel direct onze 24/7
-			storingsdienst.
-		</p>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="section tight">
 	<div class="container layout">
@@ -45,11 +34,21 @@
 
 			{#if form && 'sent' in form}
 				<div class="sent" role="status">
-					<h2 class="h3">Bedankt voor uw bericht.</h2>
-					<p>Dit is een demo: uw bericht is nog niet verzonden.</p>
+					<h2 class="h3"><Text text={page.sent.title} /></h2>
+					<p><Text text={page.sent.text} /></p>
 				</div>
 			{:else}
-				<form method="POST" use:enhance>
+				<form
+					method="POST"
+					use:enhance={({ formData }) => {
+						const values = Object.fromEntries(formData) as Record<string, string>;
+						return async ({ result, update }) => {
+							// Demo: the request shows up in the CMS under Berichten (this browser only)
+							if (result.type === 'success') content.receive(values);
+							await update();
+						};
+					}}
+				>
 					<div class="field">
 						<label for="naam">Naam</label>
 						<input
@@ -150,8 +149,8 @@
 
 		<aside class="details">
 			<section id="storing" class="storing on-dark" aria-labelledby="storing-title">
-				<h2 id="storing-title" class="label">Storing of opsluiting?</h2>
-				<p>Bel onze 24/7 storingsdienst. Wij zijn dag en nacht bereikbaar.</p>
+				<h2 id="storing-title" class="label">{page.storing.title}</h2>
+				<p><Text text={page.storing.text} /></p>
 				<p class="h2"><Phone /></p>
 			</section>
 

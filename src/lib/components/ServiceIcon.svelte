@@ -1,6 +1,6 @@
 <!-- Line icons for the four services: navy stroke, teal accent, square caps like the logo -->
 <script lang="ts">
-	import type { ServiceIconName } from '#lib/site.ts';
+	import type { ServiceIconName } from '#lib/content.ts';
 
 	let { name, size = 48 }: { name: ServiceIconName; size?: number } = $props();
 </script>

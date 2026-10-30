@@ -1,47 +1,31 @@
 <script lang="ts">
+	import ContentHero from '#lib/components/ContentHero.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHero from '#lib/components/PageHero.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import ServiceCards from '#lib/components/ServiceCards.svelte';
-	import { photos } from '#lib/photos.ts';
-	import { marsSpecs, projects } from '#lib/site.ts';
+	import Text from '#lib/components/Text.svelte';
+	import { content } from '#lib/content.svelte.ts';
 
-	const nieuwbouw = projects.filter((p) => p.category === 'Nieuwbouw');
+	let page = $derived(content.data.pages.nieuwbouw);
+	let nieuwbouw = $derived(content.data.projects.filter((p) => p.category === 'Nieuwbouw'));
 </script>
 
-<svelte:head>
-	<title>Nieuwbouw liften en de corporatielift | Nivå Liften</title>
-	<meta
-		name="description"
-		content="Nieuwe liftinstallaties door Nivå Liften: corporatieliften type Mars, goederenliften en homeliften."
-	/>
-</svelte:head>
+<Seo seo={page.seo} />
 
-<PageHero photo={photos.liftInstallation}>
-	<div class="hero-intro">
-		<p class="label">Diensten</p>
-		<h1>Nieuwbouw</h1>
-		<p class="lead">
-			Nieuwe liftinstallaties op maat: van corporatielift tot goederenlift en homelift.
-		</p>
-		<a class="button button-primary" href="/contact?type=Nieuwbouw">Offerte aanvragen</a>
-	</div>
-</PageHero>
+<ContentHero hero={page.hero} />
 
 <section class="section tight" aria-labelledby="mars-title">
 	<div class="container two-col">
 		<div>
-			<p class="label">Voor woningcorporaties</p>
-			<h2 id="mars-title">De corporatielift type Mars</h2>
-			<p class="lead">
-				Voor woningcorporaties installeert Nivå de corporatielift type Mars. Zo plaatsten wij tien
-				nieuwe corporatieliften op diverse locaties in Bergen op Zoom.
-			</p>
+			<p class="label">{page.mars.label}</p>
+			<h2 id="mars-title"><Text text={page.mars.title} /></h2>
+			<p class="lead"><Text text={page.mars.lead} /></p>
 		</div>
 		<div class="card card-body">
-			<p class="label">Specificaties</p>
+			<p class="label">{page.mars.specsLabel}</p>
 			<dl class="specs">
-				{#each marsSpecs as spec (spec.label)}
+				{#each page.mars.specs as spec, i (i)}
 					<div>
 						<dt>{spec.label}</dt>
 						<dd class="num">{spec.value}</dd>
@@ -54,9 +38,9 @@
 
 <section class="section tight surface" aria-labelledby="projecten-title">
 	<div class="container">
-		<h2 id="projecten-title" class="section-title">Nieuwbouw <strong>projecten</strong></h2>
+		<h2 id="projecten-title" class="section-title"><Text text={page.projectsTitle} /></h2>
 		<div class="three-up">
-			{#each nieuwbouw as project (project.name)}
+			{#each nieuwbouw as project, i (i)}
 				<ProjectCard {project} />
 			{/each}
 		</div>
@@ -65,17 +49,12 @@
 
 <section class="section tight" aria-labelledby="andere-title">
 	<div class="container">
-		<h2 id="andere-title" class="section-title">Andere <strong>diensten</strong></h2>
+		<h2 id="andere-title" class="section-title"><Text text={page.otherTitle} /></h2>
 		<ServiceCards exclude="/diensten/nieuwbouw" />
 	</div>
 </section>
 
-<CtaBand
-	primary={{ label: 'Offerte aanvragen', href: '/contact?type=Nieuwbouw' }}
-	secondary={{ label: 'Contact opnemen', href: '/contact' }}
->
-	{#snippet title()}Een nieuwe lift <strong>plannen</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={page.cta} />
 
 <style>
 	.two-col .label {

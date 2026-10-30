@@ -3,7 +3,8 @@
 	import { formatDate } from '#lib/site.ts';
 	import PhotoCredit from './PhotoCredit.svelte';
 
-	let { post, level = 3 }: { post: Post; level?: 2 | 3 } = $props();
+	// Without `content`, so the CMS preview can show a draft in the same card
+	let { post, level = 3 }: { post: Omit<Post, 'content'>; level?: 2 | 3 } = $props();
 </script>
 
 <article class="card news-item">

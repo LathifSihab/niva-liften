@@ -1,4 +1,3 @@
-<!-- Homepage: structure and styling follow the client's mockup (docs/Website Mock up.png) -->
 <script lang="ts">
 	import CheckList from '#lib/components/CheckList.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
@@ -6,45 +5,41 @@
 	import PageHero from '#lib/components/PageHero.svelte';
 	import PhotoCredit from '#lib/components/PhotoCredit.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
+	import Seo from '#lib/components/Seo.svelte';
 	import ServiceCards from '#lib/components/ServiceCards.svelte';
-	import { posts } from '#lib/nieuws.ts';
-	import { photos } from '#lib/photos.ts';
-	import { projects, reasons, stats, team, values } from '#lib/site.ts';
+	import Text from '#lib/components/Text.svelte';
+	import { content, photoOf } from '#lib/content.svelte.ts';
 
-	const featured = projects.filter((p) => p.featured);
-	const banner = photos.modernisedLifts;
+	let home = $derived(content.data.pages.home);
+	let settings = $derived(content.data.settings);
+	let featured = $derived(content.data.projects.filter((p) => p.featured));
+	let banner = $derived(photoOf(home.modernisation.photo));
 </script>
 
-<svelte:head>
-	<title>Nivå Liften | Liftonderhoud, reparatie en liftmodernisering</title>
-	<meta
-		name="description"
-		content="Nivå Liften: liftonderhoud, lift reparatie en liftmodernisering voor alle merken. Sinds 2005, 1.200 installaties in onderhoud, 24/7 storingsdienst."
-	/>
-</svelte:head>
+<Seo seo={home.seo} />
 
-<PageHero photo={photos.liftDoorFront} center doors aria-labelledby="hero-title">
-	<h1 id="hero-title" class="display hero-title">Uw lift moet altijd blijven functioneren.</h1>
-	<p class="lead hero-lead">Onderhoud, reparaties en modernisering van liften door Nivå Liften.</p>
+<PageHero photo={photoOf(home.hero.photo)} center doors aria-labelledby="hero-title">
+	<h1 id="hero-title" class="display hero-title"><Text text={home.hero.title} /></h1>
+	<p class="lead hero-lead"><Text text={home.hero.lead} /></p>
 	<div class="button-row">
-		<a class="button button-primary" href="/contact?type=Onderhoud">Onderhoud aanvragen</a>
-		<a class="button button-secondary" href="/diensten/liftmodernisering">Modernisering bespreken</a>
+		<a class="button button-primary" href={home.hero.primary.href}>{home.hero.primary.label}</a>
+		<a class="button button-secondary" href={home.hero.secondary.href}>{home.hero.secondary.label}</a>
 	</div>
 </PageHero>
 
 <section id="diensten" class="section tight surface" aria-labelledby="diensten-title">
 	<div class="container">
-		<h2 id="diensten-title" class="section-title">Onze <strong>Diensten</strong></h2>
+		<h2 id="diensten-title" class="section-title"><Text text={home.services.title} /></h2>
 		<ServiceCards />
 	</div>
 </section>
 
 <section class="section tight" aria-labelledby="waarom-title">
 	<div class="container">
-		<h2 id="waarom-title" class="section-title">Waarom <strong>Nivå Liften</strong>?</h2>
-		<CheckList items={reasons} center />
+		<h2 id="waarom-title" class="section-title"><Text text={home.reasons.title} /></h2>
+		<CheckList items={home.reasons.items} center />
 		<dl class="stats">
-			{#each stats as stat (stat.label)}
+			{#each home.reasons.stats as stat, i (i)}
 				<div>
 					<dt class="label">{stat.label}</dt>
 					<dd class="h1 num">{stat.figure}</dd>
@@ -56,18 +51,20 @@
 
 <section class="modernisering on-dark" aria-labelledby="mod-title">
 	<div class="mod-text">
-		<h2 id="mod-title" class="h1">Is uw lift verouderd?</h2>
-		<p class="lead">
-			Geef uw lift een tweede leven met modernisering. Veilig, comfortabel en toekomstbestendig,
-			met marktvrije onderdelen.
+		<h2 id="mod-title" class="h1"><Text text={home.modernisation.title} /></h2>
+		<p class="lead"><Text text={home.modernisation.text} /></p>
+		<p class="mod-stat">
+			<span class="num">{home.modernisation.figure}</span>
+			{home.modernisation.figureLabel}
 		</p>
-		<p class="mod-stat"><span class="num">60–70</span> moderniseringen per jaar</p>
-		<a class="button button-primary" href="/diensten/liftmodernisering">Meer over modernisering</a>
+		<a class="button button-primary" href={home.modernisation.button.href}>
+			{home.modernisation.button.label}
+		</a>
 	</div>
 	<figure class="mod-photo">
 		<img
 			src={banner.src}
-			srcset="{banner.src} 960w, {banner.wide} 1920w"
+			srcset="{banner.src} 960w, {banner.wide ?? banner.src} 1920w"
 			sizes="(min-width: 960px) 45vw, 100vw"
 			alt={banner.alt}
 			width={banner.width}
@@ -80,28 +77,28 @@
 
 <section class="section tight surface" aria-labelledby="projecten-title">
 	<div class="container">
-		<h2 id="projecten-title" class="section-title">Recente <strong>projecten</strong></h2>
+		<h2 id="projecten-title" class="section-title"><Text text={home.projects.title} /></h2>
 		<div class="three-up">
-			{#each featured as project (project.name)}
+			{#each featured as project, i (i)}
 				<ProjectCard {project} />
 			{/each}
 		</div>
 		<div class="section-actions">
-			<a class="button button-secondary" href="/projecten">Alle projecten</a>
+			<a class="button button-secondary" href={home.projects.button.href}>{home.projects.button.label}</a>
 		</div>
 	</div>
 </section>
 
 <section class="section tight" aria-labelledby="nieuws-title">
 	<div class="container">
-		<h2 id="nieuws-title" class="section-title">Laatste <strong>nieuws</strong></h2>
+		<h2 id="nieuws-title" class="section-title"><Text text={home.news.title} /></h2>
 		<div class="news">
-			{#each posts.slice(0, 3) as post (post.slug)}
+			{#each content.posts.slice(0, 3) as post (post.slug)}
 				<NewsItem {post} />
 			{/each}
 		</div>
 		<div class="section-actions">
-			<a class="button button-secondary" href="/nieuws">Alle berichten</a>
+			<a class="button button-secondary" href={home.news.button.href}>{home.news.button.label}</a>
 		</div>
 	</div>
 </section>
@@ -109,18 +106,15 @@
 <section id="over-niva" class="section tight surface" aria-labelledby="over-title">
 	<div class="container about">
 		<div>
-			<h2 id="over-title" class="over-title">Over <strong>Nivå Liften</strong></h2>
-			<p class="lead">
-				In 2005 begon Nivå Liften met één medewerker en twee installaties. Nu zorgen 25 medewerkers
-				voor 1.200 installaties bij meer dan 700 klanten, VvE's en commerciële opdrachtgevers.
-			</p>
-			<blockquote class="values h3">{values}</blockquote>
-			<a class="button button-secondary" href="/over-niva-liften">Meer over Nivå</a>
+			<h2 id="over-title" class="over-title"><Text text={home.about.title} /></h2>
+			<p class="lead"><Text text={home.about.text} /></p>
+			<blockquote class="values h3">{settings.values}</blockquote>
+			<a class="button button-secondary" href={home.about.button.href}>{home.about.button.label}</a>
 		</div>
 		<div class="card team">
-			<h3 class="label">Directie</h3>
+			<h3 class="label">{home.about.teamLabel}</h3>
 			<ul class="plain-list">
-				{#each team as member (member.name)}
+				{#each settings.team as member, i (i)}
 					<li>
 						<span class="h3">{member.name}</span>
 						<span class="small">{member.role}</span>
@@ -131,9 +125,7 @@
 	</div>
 </section>
 
-<CtaBand>
-	{#snippet title()}Heeft u een vraag over <strong>uw lift</strong>?{/snippet}
-</CtaBand>
+<CtaBand cta={home.cta} />
 
 <style>
 	/* Hero */
@@ -251,7 +243,7 @@
 		font-weight: 500;
 	}
 
-	.over-title strong {
+	.over-title :global(strong) {
 		font-weight: 700;
 	}
 

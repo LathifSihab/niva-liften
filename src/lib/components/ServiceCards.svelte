@@ -1,13 +1,13 @@
 <!-- "Onze Diensten": four white cards with icon, title, rule and short text (client's mockup) -->
 <script lang="ts">
-	import { services } from '#lib/site.ts';
+	import { content } from '#lib/content.svelte.ts';
 	import ServiceIcon from './ServiceIcon.svelte';
 
 	let { exclude }: { exclude?: string } = $props();
 </script>
 
 <ul class="plain-list cards">
-	{#each services.filter((s) => s.href !== exclude) as service (service.href)}
+	{#each content.data.settings.services.filter((s) => s.href !== exclude) as service (service.href)}
 		<li>
 			<a class="card service" href={service.href}>
 				<ServiceIcon name={service.icon} />
