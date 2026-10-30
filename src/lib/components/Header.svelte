@@ -241,9 +241,10 @@
 
 	.topbar-inner {
 		display: flex;
+		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-24);
-		padding-block: var(--space-8);
+		height: var(--topbar-h);
 	}
 
 	.topbar p {

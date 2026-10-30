@@ -1,7 +1,8 @@
 <script lang="ts">
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHeader from '#lib/components/PageHeader.svelte';
+	import PageHero from '#lib/components/PageHero.svelte';
 	import ProjectCard from '#lib/components/ProjectCard.svelte';
+	import { photos } from '#lib/photos.ts';
 	import { projects } from '#lib/site.ts';
 
 	// Grouped as in the Bedrijfspresentatie: "Onze projecten 2024 – 2025"
@@ -19,11 +20,13 @@
 	/>
 </svelte:head>
 
-<PageHeader
-	eyebrow="Projecten"
-	title="Onze projecten 2024 – 2025"
-	lead="Een greep uit ons werk voor VvE's, woningcorporaties en bedrijven."
-/>
+<PageHero photo={photos.projectStadlander}>
+	<div class="hero-intro">
+		<p class="label">Projecten</p>
+		<h1>Onze projecten 2024 – 2025</h1>
+		<p class="lead">Een greep uit ons werk voor VvE's, woningcorporaties en bedrijven.</p>
+	</div>
+</PageHero>
 
 {#each groups as group, i (group.category)}
 	<section class="section tight" class:surface={i % 2 === 1} aria-labelledby="group-{i}">

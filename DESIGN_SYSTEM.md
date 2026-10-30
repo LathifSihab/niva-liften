@@ -127,10 +127,11 @@ Rules:
 - Above it (≥960px), a slim navy top bar that scrolls away: "Merkonafhankelijk liftonderhoud sinds 2005" left, "24/7 storingsdienst + phone" right.
 - Mobile: logo, phone icon-button, menu button → full-screen navy menu.
 
-### Page hero / page header
-- **PageHero**: full-bleed photo, white text bottom-left, credit bottom-right. Homepage (tall, 88svh) and service pages.
-- **Stat band**: navy strip directly under the homepage hero, 4 figures divided by thin teal-mist lines.
-- **PageHeader**: surface band with label, h1 and lead, for pages without a photo (Projecten, Nieuws, Contact).
+### Page hero (every page)
+- **PageHero**: full-screen photo (100svh minus header and top bar), white text bottom-left (homepage: centred), credit bottom-right, round scroll cue to `#inhoud`.
+- **Motion** (CSS only, motion-safe): photo zooms out slowly (14s), text rises in one element at a time, scroll cue bobs.
+- **Lift doors** (homepage, `doors` prop → `LiftIntro.svelte`): two brushed-steel panels from the colour tokens cover the hero on load and slide open (~1.75s; text starts at 1.3s). Scrolling down slides them shut again on the `--hero` view timeline (Chrome/Edge; other browsers skip it). Homepage photo: a straight-on landing door.
+- Hidden overflow uses `overflow: clip`, not `hidden`, so the doors' `view()` timeline tracks the page.
 
 ### Split section
 Sticky heading column left (5/12), content right (7/12) on ≥960px. Used for Diensten, Waarom Nivå, Nieuws. Projects use one large card (7/12, 4:5) next to two stacked (5/12, 3:2); images zoom 3% on hover (motion-safe only).

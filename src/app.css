@@ -43,6 +43,8 @@
 	--gutter: var(--space-24);
 	--side: var(--space-16);
 	--header-h: 4.5rem;
+	/* Navy top bar above the header; only shown from 960px */
+	--topbar-h: 0px;
 }
 
 @media (min-width: 640px) {
@@ -54,6 +56,7 @@
 @media (min-width: 960px) {
 	:root {
 		--side: var(--space-48);
+		--topbar-h: 2.25rem;
 	}
 }
 
@@ -115,6 +118,10 @@ h3,
 .display {
 	font-family: var(--font-heading);
 	text-wrap: balance;
+	/* Long Dutch compounds ("Liftmodernisering") must not overflow at 320px */
+	/* (`anywhere`, not `break-word`: only it lets grid/flex parents shrink the heading) */
+	hyphens: auto;
+	overflow-wrap: anywhere;
 }
 
 .display {
@@ -418,6 +425,33 @@ a.card:hover {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-12);
+}
+
+/* Hero entrance (PageHero). Components only run them under prefers-reduced-motion: no-preference. */
+@keyframes hero-zoom {
+	from {
+		transform: scale(1.14);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes hero-rise {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes hero-bob {
+	50% {
+		transform: translateY(8px);
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

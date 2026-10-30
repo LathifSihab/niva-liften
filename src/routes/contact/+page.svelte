@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import PageHeader from '#lib/components/PageHeader.svelte';
+	import PageHero from '#lib/components/PageHero.svelte';
+	import { photos } from '#lib/photos.ts';
 	import Phone from '#lib/components/Phone.svelte';
 	import { liftBrands, requestTypes, type ContactField } from '#lib/contact.ts';
 	import { contact, PLACEHOLDER } from '#lib/site.ts';
@@ -27,11 +28,16 @@
 	{/if}
 {/snippet}
 
-<PageHeader
-	eyebrow="Contact"
-	title="Onderhoud aanvragen of een vraag stellen"
-	lead="Vul het formulier in, dan nemen wij contact met u op. Storing? Bel direct onze 24/7 storingsdienst."
-/>
+<PageHero photo={photos.liftDoors}>
+	<div class="hero-intro">
+		<p class="label">Contact</p>
+		<h1>Onderhoud aanvragen of een vraag stellen</h1>
+		<p class="lead">
+			Vul het formulier in, dan nemen wij contact met u op. Storing? Bel direct onze 24/7
+			storingsdienst.
+		</p>
+	</div>
+</PageHero>
 
 <section class="section tight">
 	<div class="container layout">

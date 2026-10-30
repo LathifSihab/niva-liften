@@ -1,7 +1,8 @@
 ---
 title: 'Moderniseren of vervangen? Vier vragen voor uw VvE'
 date: '2026-10-30'
-category: 'Modernisering'
+category: 'Advies'
+image: 'modernisedLifts'
 excerpt: 'Een oude lift hoeft niet altijd helemaal vervangen te worden. Met deze vier vragen maakt u als VvE-bestuur een betere keuze.'
 ---
 

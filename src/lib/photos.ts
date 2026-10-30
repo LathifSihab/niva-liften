@@ -3,6 +3,8 @@
 // Replace with real Nivå photos for production.
 import controllerCabinetsWide from '../assets/photos/controller-cabinets-1920.jpg';
 import controllerCabinets from '../assets/photos/controller-cabinets.jpg';
+import liftDoorFrontWide from '../assets/photos/lift-door-front-1920.jpg';
+import liftDoorFront from '../assets/photos/lift-door-front.jpg';
 import liftDoorsWide from '../assets/photos/lift-doors-1920.jpg';
 import liftDoors from '../assets/photos/lift-doors.jpg';
 import liftInstallationWide from '../assets/photos/lift-installation-1920.jpg';
@@ -14,16 +16,21 @@ import modernisedLifts from '../assets/photos/modernised-lifts.jpg';
 import liftMotorRoomWide from '../assets/photos/lift-motor-room-1920.jpg';
 import liftMotorRoom from '../assets/photos/lift-motor-room.jpg';
 import projectEetvilla from '../assets/photos/project-eetvilla.jpg';
+import projectGravenhofWide from '../assets/photos/project-gravenhof-1920.jpg';
 import projectGravenhof from '../assets/photos/project-gravenhof.jpg';
 import projectHuisartsenpraktijk from '../assets/photos/project-huisartsenpraktijk.jpg';
 import projectMeander from '../assets/photos/project-meander.jpg';
+import projectStadlanderWide from '../assets/photos/project-stadlander-1920.jpg';
 import projectStadlander from '../assets/photos/project-stadlander.jpg';
+import projectStudentHotelWide from '../assets/photos/project-student-hotel-1920.jpg';
 import projectStudentHotel from '../assets/photos/project-student-hotel.jpg';
 
 export type Photo = {
 	src: string;
 	/** 1920px version for full-bleed use */
 	wide?: string;
+	/** Pixel width of `wide` when it is not 1920 */
+	wideWidth?: number;
 	width: number;
 	height: number;
 	alt: string;
@@ -37,6 +44,15 @@ const ccBy4 = { license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/l
 const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${file}`;
 
 export const photos = {
+	liftDoorFront: {
+		src: liftDoorFront,
+		wide: liftDoorFrontWide,
+		wideWidth: 1440,
+		width: 960,
+		height: 1457,
+		alt: 'Gesloten liftdeur van Wittur, recht van voren gezien',
+		credit: { author: 'Carloferrari', ...ccBySa4, source: commons('Wittur-hydra-elevator-door.jpg') }
+	},
 	liftDoors: {
 		src: liftDoors,
 		wide: liftDoorsWide,
@@ -107,6 +123,7 @@ export const photos = {
 	},
 	projectGravenhof: {
 		src: projectGravenhof,
+		wide: projectGravenhofWide,
 		width: 960,
 		height: 638,
 		alt: 'Appartementencomplex van baksteen met balkons',
@@ -118,6 +135,8 @@ export const photos = {
 	},
 	projectStudentHotel: {
 		src: projectStudentHotel,
+		wide: projectStudentHotelWide,
+		wideWidth: 1440,
 		width: 960,
 		height: 1280,
 		alt: 'Hoge woontoren met oranje gevel',
@@ -129,6 +148,7 @@ export const photos = {
 	},
 	projectStadlander: {
 		src: projectStadlander,
+		wide: projectStadlanderWide,
 		width: 960,
 		height: 638,
 		alt: 'Nieuwe appartementen aan het water',

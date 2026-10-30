@@ -23,7 +23,7 @@
 	/>
 </svelte:head>
 
-<PageHero photo={photos.liftDoors} tall center aria-labelledby="hero-title">
+<PageHero photo={photos.liftDoorFront} center doors aria-labelledby="hero-title">
 	<h1 id="hero-title" class="display hero-title">Uw lift moet altijd blijven functioneren.</h1>
 	<p class="lead hero-lead">Onderhoud, reparaties en modernisering van liften door Nivå Liften.</p>
 	<div class="button-row">

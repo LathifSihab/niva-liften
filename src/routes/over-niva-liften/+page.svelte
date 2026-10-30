@@ -1,7 +1,8 @@
 <script lang="ts">
 	import CheckList from '#lib/components/CheckList.svelte';
 	import CtaBand from '#lib/components/CtaBand.svelte';
-	import PageHeader from '#lib/components/PageHeader.svelte';
+	import PageHero from '#lib/components/PageHero.svelte';
+	import { photos } from '#lib/photos.ts';
 	import { clientReasons, growth, PLACEHOLDER, team, values } from '#lib/site.ts';
 </script>
 
@@ -13,11 +14,16 @@
 	/>
 </svelte:head>
 
-<PageHeader
-	eyebrow="Over ons"
-	title="Over Nivå Liften"
-	lead="Service, modernisering, reparatie en nieuwbouw van liften. Sinds 2005, voor VvE's en commerciële opdrachtgevers."
-/>
+<PageHero photo={photos.projectGravenhof}>
+	<div class="hero-intro">
+		<p class="label">Over ons</p>
+		<h1>Over Nivå Liften</h1>
+		<p class="lead">
+			Service, modernisering, reparatie en nieuwbouw van liften. Sinds 2005, voor VvE's en
+			commerciële opdrachtgevers.
+		</p>
+	</div>
+</PageHero>
 
 <section class="section tight" aria-labelledby="groei-title">
 	<div class="container">
