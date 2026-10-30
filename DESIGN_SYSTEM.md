@@ -22,24 +22,21 @@ Primary audiences (from the presentation's segmentation):
 
 ---
 
-## 2. Design direction: "Schacht" (the lift shaft)
+## 2. Design direction: the client's mockup
 
-The client's mockup (glossy stainless-steel stock photos, four icon cards, a checkmark grid) is the generic template every lift company already has. We keep its **content order**, not its look.
-
-The direction borrows from the thing Nivå actually works in: the shaft, the floor indicator, the technical drawing.
+> Changed 2026-10-31 (docs/adr/0002). The earlier "Schacht" direction (editorial rows, floor indicator `00`–`07`, no cards) is retired. We now follow the client's mockup (`docs/Website Mock up.png`) for layout and components, with Nivå's own tokens.
 
 | Move | Decision |
 |---|---|
-| **Type** | Montserrat (brand font, used in the presentation) for headings only, set tight and heavy. Source Sans 3 for body. Tabular numerals for all figures. |
-| **Palette stance** | One dominant colour: **Nivå teal** from the logo. Deep navy for text and dark sections. Cool off-white backgrounds. **Signal amber** only for 24/7 storing / urgent actions. Nothing else. |
-| **Layout stance** | Left-aligned, editorial. Strong vertical rhythm. Services as a **numbered list with rows**, not four identical cards. Real photos, full-bleed or cropped tall (shaft proportion). |
-| **Motion** | Almost none. One idea: the floor-indicator number changes as you scroll between sections. Everything respects `prefers-reduced-motion`. |
-| **Signature detail** | **Floor indicator**: each home-page section is labelled like a lift floor (`00 Home`, `01 Diensten`, `02 Waarom Nivå` …), shown in a small mono/tabular label at the section's top left, with a thin vertical "shaft line" on large screens. Used on the homepage only, not everywhere. |
+| **Type** | Montserrat for headings, Source Sans 3 for body. Section titles centred with one bold word: "Onze **Diensten**". Tabular numerals for all figures. |
+| **Palette stance** | **Nivå teal** from the logo (not the mockup's royal blue) for primary buttons and accents. Navy for text and dark sections. Light surface backgrounds alternating with white. **Signal amber** only for 24/7 storing. |
+| **Layout stance** | As the mockup: centred photo hero, four white service cards with icons, checkmark grid, dark modernisering banner with photo, project photo tiles with a dark caption bar, centred contact CTA. Inner pages: photo hero (text bottom-left), two-column intro with a card, "Andere diensten" cards, CTA band. |
+| **Motion** | Hover only: cards lift 2px and gain shadow, project photos zoom 4%. Everything respects `prefers-reduced-motion`. |
 
 Rules that follow from the direction:
-- **Real Nivå photography over stock.** The presentation already has usable images: technician in the shaft (p.2), team photo with vans (p.15), project buildings (p.7, p.9), control cabinets and push-button panels (p.8, p.11–13). Use these in the demo. No AI-generated lift cabins.
-- Technical line drawings (the Corporatielift Mars drawing on p.10) may be used as a subtle background texture in the Modernisering section.
-- Numbers are a design element: 2005 → 2026, 1.200 installaties, 700+ klanten, 25 medewerkers, 24/7.
+- Photos: free-licence stand-ins for now, each captioned "Voorbeeldfoto" (§7). Real Nivå photos replace them when the client sends originals.
+- Numbers stay visible: 2005, 1.200 installaties, 700+ klanten, 25 medewerkers, 60–70 moderniseringen per jaar, 24/7.
+- Copy from the mockup is used where it is the client's own wording ("Is uw lift verouderd?", "Technische expertise", "Maatwerk oplossingen"); its typos are not.
 
 ---
 
@@ -51,7 +48,7 @@ All contrast ratios checked against WCAG 2.1.
 |---|---|---|---|
 | `--color-teal` | `#065C77` | Brand (logo). Primary buttons, links, active states, key accents | 7.5:1 on white, AA/AAA for text |
 | `--color-teal-deep` | `#04475C` | Hover/pressed for teal | 10.2:1 on white |
-| `--color-teal-mist` | `#8FB8C6` | Small text/lines on navy (labels, floor indicator on dark) | 7.7:1 on navy |
+| `--color-teal-mist` | `#8FB8C6` | Small text/lines on navy (labels and captions on dark) | 7.7:1 on navy |
 | `--color-navy` | `#0B1F3A` | Body text, headings, dark sections, footer | 16.5:1 on white |
 | `--color-steel` | `#4A5866` | Secondary text, meta, captions | 7.3:1 on white |
 | `--color-steel-light` | `#6B7884` | Placeholder text only (min. size 16px) | 4.5:1 on white |
@@ -87,7 +84,7 @@ Proportions on any screen: ~70% white/surface, ~20% navy, ≤10% teal, amber app
 /* Google Fonts, self-host in production */
 --font-heading: "Montserrat", system-ui, sans-serif;   /* 600, 700, 800 */
 --font-body: "Source Sans 3", system-ui, sans-serif;     /* 400, 600 */
---font-label: "Montserrat", system-ui, sans-serif;     /* 600, uppercase, tracked: floor labels */
+--font-label: "Montserrat", system-ui, sans-serif;     /* 600, uppercase, tracked: eyebrow labels */
 ```
 
 Scale (fluid, 1.25 ratio, `clamp()` between 360px and 1280px):
@@ -101,7 +98,7 @@ Scale (fluid, 1.25 ratio, `clamp()` between 360px and 1280px):
 | `--text-body-lg` | 18 → 20px | 400 | 1.55 | Intro paragraphs |
 | `--text-body` | 16 → 17px | 400 | 1.6 | Body |
 | `--text-small` | 14px | 400 | 1.5 | Meta, captions |
-| `--text-label` | 12 → 13px | 600, uppercase, `letter-spacing: .12em` | 1.2 | Floor indicator, eyebrow labels |
+| `--text-label` | 12 → 13px | 600, uppercase, `letter-spacing: .12em` | 1.2 | Eyebrow labels, card labels |
 
 Rules:
 - Headings: `letter-spacing: -0.02em` from h2 up. Max line length of body: `65ch`.
@@ -116,8 +113,8 @@ Rules:
 - **Base unit 8px.** Scale: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128.
 - **Section padding:** 64px mobile, 128px desktop (vertical). Rhythm comes from varying it: hero and modernisation get more, lists get less.
 - **Grid:** 12 columns, max content width **1200px**, gutter 24px, side padding 16px mobile / 32px tablet / 48px desktop. Text columns sit in 7 of 12 columns, left-aligned. Avoid centring paragraphs.
-- **Radius:** `2px` on buttons and inputs, `0` on images and sections. The brand is technical and square (the logo is a square). No `rounded-2xl`.
-- **Shadows:** none by default. Separation through borders (`1px var(--color-line)`) and background change. One exception: the sticky header gets a 1px bottom border on scroll.
+- **Radius:** `4px` (`--radius`) on buttons, inputs, cards and photo tiles. `0` on full-bleed sections. No large rounding.
+- **Shadows:** `--shadow-card` on white cards and photo tiles, `--shadow-card-hover` on hover. Nothing else gets a shadow; the sticky header gets a 1px bottom border on scroll.
 - **Breakpoints:** 640, 960, 1280.
 
 ---
@@ -126,8 +123,17 @@ Rules:
 
 ### Header
 - Logo left (teal square "NIVÅ LIFTEN"), nav: Diensten ▾, Projecten, Over ons, Nieuws, Vacatures, Contact.
-- Right side: phone number as a text link + **"Storing melden 24/7"** (amber, the only amber on the page).
+- Right side: **"Storing melden 24/7"** (amber, the only amber on the page).
+- Above it (≥960px), a slim navy top bar that scrolls away: "Merkonafhankelijk liftonderhoud sinds 2005" left, "24/7 storingsdienst + phone" right.
 - Mobile: logo, phone icon-button, menu button → full-screen navy menu.
+
+### Page hero / page header
+- **PageHero**: full-bleed photo, white text bottom-left, credit bottom-right. Homepage (tall, 88svh) and service pages.
+- **Stat band**: navy strip directly under the homepage hero, 4 figures divided by thin teal-mist lines.
+- **PageHeader**: surface band with label, h1 and lead, for pages without a photo (Projecten, Nieuws, Contact).
+
+### Split section
+Sticky heading column left (5/12), content right (7/12) on ≥960px. Used for Diensten, Waarom Nivå, Nieuws. Projects use one large card (7/12, 4:5) next to two stacked (5/12, 3:2); images zoom 3% on hover (motion-safe only).
 
 ### Buttons
 | Variant | Style | Use |
@@ -170,7 +176,7 @@ Navy background. Three groups max: contact (address, phone, e-mail, KvK), dienst
 ## 7. Iconography & imagery
 
 - Icons only where they carry meaning (phone, 24/7, download). Use a handful of inline SVGs (1.5px stroke, square caps to match the square logo) at text colour; no full icon library (a default `lucide` import is itself an AI-design tell). **No icons in coloured rounded squares.**
-- Photo treatment: natural colour, slight cool grade. No blue overlays over every image. Dark gradient only where white text sits on a photo, and only at the bottom third.
+- Photo treatment: natural colour, slight cool grade (`saturate(.7)` on full-bleed hero photos). No blue overlays over every image. Navy shade only where white text sits on a photo: from the bottom, plus from the left on wide screens (`PageHero`).
 - Image sources (demo): free-licence photos (Wikimedia Commons, CC BY / CC BY-SA) in every slot: lift machinery for hero, Modernisering and Over Nivå; Dutch buildings as stand-ins on project cards. Each carries a visible "Voorbeeldfoto · author, licence" caption so no one mistakes them for Nivå's own work. The Over Nivå slot shows machinery, not stand-in people. Production: real Nivå originals, permission per image.
 
 ---
@@ -187,33 +193,31 @@ Navy background. Three groups max: contact (address, phone, e-mail, KvK), dienst
 
 ---
 
-## 9. Homepage structure (from the framework wireframe)
+## 9. Homepage structure (Framework wireframe + client mockup)
 
-| Floor | Section | Content |
+| # | Section | Content |
 |---|---|---|
-| `00` | Hero | "Uw lift moet altijd blijven functioneren." + sub: onderhoud, reparatie en modernisering, voor elk merk. CTAs: Onderhoud aanvragen (primary) · Modernisering bespreken (secondary). Photo: technician in the shaft. |
-| `01` | Diensten | 4 service rows: Onderhoud, Reparatie, Modernisering, Nieuwbouw |
-| `02` | Waarom Nivå | Merkonafhankelijk · Eigen monteurs · 24/7 service · Korte lijnen · Marktconforme prijzen. Shown as stat block + short statements, **not** a checkmark grid |
-| `03` | Modernisering | "Renoveren in plaats van vervangen." Dark navy section, technical drawing texture, 60–70 per year, CTA |
-| `04` | Projecten | 3 cases: VvE 's Gravenhof Roermond · Student Hotel (7×) · Stadlander Bergen op Zoom (10 nieuwbouw) |
-| `05` | Nieuws | Latest 3 posts (client request) |
-| `06` | Over Nivå | Since 2005, team photo, 3 leaders (Hasan Koç, Mario Leijen, Ebad Hashemi) |
-| `07` | Contact | "Heeft u een vraag over uw lift?" + phone + form link |
+| 1 | Hero | Centred: "Uw lift moet altijd blijven functioneren." + "Onderhoud, reparaties en modernisering van liften door Nivå Liften." CTAs: Onderhoud aanvragen (primary) · Modernisering bespreken (white). |
+| 2 | Onze **Diensten** | 4 icon cards: Liftonderhoud, Liftreparatie, Liftmodernisering, Nieuwbouw (each links to its page) |
+| 3 | Waarom **Nivå Liften**? | Checkmark grid (3×2): Merkonafhankelijk · Technische expertise · Snelle service · Eigen monteurs · Maatwerk oplossingen · Verantwoordelijk. Key figures below. |
+| 4 | Modernisering banner | "Is uw lift verouderd?" Navy text half, photo half, 60–70 per year, CTA |
+| 5 | Recente **projecten** | 3 photo tiles: VvE 's Gravenhof · Student Hotel · Stadlander |
+| 6 | Laatste **nieuws** | Latest posts as cards (client request) |
+| 7 | Over **Nivå Liften** | Growth since 2005, company statement, Directie with roles |
+| 8 | Contact CTA | "Heeft u een vraag over **uw lift**?" Contact opnemen · Offerte aanvragen |
 
 IoT / SafetyBlueBox: mention as a short "Vooruitblik: 24/7 verbonden" block on the Onderhoud page, not on the homepage (only 5 installations so far; don't overclaim).
 
 ---
 
-## 10. Anti-slop checklist (run before every demo)
+## 10. Checklist (run before every demo)
 
-From the `avoid-ai-design` skill catalogue; all must pass:
+Cards, icon cards and the checkmark grid are allowed since ADR 0002 (client's mockup). All of these must pass:
 
 - [ ] No purple/indigo, no gradients on text or buttons
 - [ ] No Inter, no default Tailwind/shadcn theme
-- [ ] No `rounded-2xl shadow-lg` cards, no icon-in-rounded-square
-- [ ] No identical 3- or 4-card rows with icons
-- [ ] No checkmark feature grid
-- [ ] No stock steel lift cabins or AI-generated photos
+- [ ] Only `--radius` and `--shadow-card*`; no large rounding, no icon-in-coloured-square
+- [ ] No AI-generated photos; every stand-in photo is captioned "Voorbeeldfoto" with its credit
 - [ ] No arrows on every button, no "Ontdek meer" everywhere
 - [ ] Teal is the only accent; amber appears once per view
 - [ ] Hover and focus states exist and are visible

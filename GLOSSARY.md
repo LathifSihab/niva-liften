@@ -23,4 +23,3 @@ Shared language for this project. Maintained by `/grill-with-docs` and `domain-m
 | **Monteur** | Lift technician; Nivå has its own | Vacatures audience |
 | **Besturing / regelaar / machine** | Controller / drive / motor | Modernisering page |
 | **Drukknoptableau** | Push-button panel | Modernisering page |
-| **Floor indicator** (design) | Section label `00`–`07` on the homepage, the design system's signature detail | Component `FloorLabel` |

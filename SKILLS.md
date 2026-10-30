@@ -83,7 +83,7 @@ grill-with-docs ──► prototype ──► to-spec ──► to-tickets ─�
 ### Where they can conflict, and who wins
 | Conflict | Rule |
 |---|---|
-| Ponytail wants to skip the floor-indicator scroll effect (YAGNI) | The floor indicator is the design system's **signature detail**: keep it, but build it with CSS + one small `IntersectionObserver`, no library. |
+| Ponytail wants to cut a mockup section | The client mockup (ADR 0002) defines the homepage sections: keep them. |
 | avoid-ai-design wants a full rebuild of a page | Only for pages that fail P0 tells. Otherwise surgical: swap tells, keep structure and tokens. |
 | Ponytail `ultra` questions the blog | Blog/news is an explicit client request. Never cut it. |
 | `tdd` on static pages | Skip. Test only real logic. |

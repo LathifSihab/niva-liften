@@ -1,8 +1,17 @@
 // Free-licence example photos for the demo (Wikimedia Commons). None of them shows Nivå's own
 // work or people: the Photo component labels each one "Voorbeeldfoto" and credits it.
 // Replace with real Nivå photos for production.
+import controllerCabinetsWide from '../assets/photos/controller-cabinets-1920.jpg';
 import controllerCabinets from '../assets/photos/controller-cabinets.jpg';
+import liftDoorsWide from '../assets/photos/lift-doors-1920.jpg';
+import liftDoors from '../assets/photos/lift-doors.jpg';
+import liftInstallationWide from '../assets/photos/lift-installation-1920.jpg';
+import liftInstallation from '../assets/photos/lift-installation.jpg';
+import liftMachineWide from '../assets/photos/lift-machine-1920.jpg';
 import liftMachine from '../assets/photos/lift-machine.jpg';
+import modernisedLiftsWide from '../assets/photos/modernised-lifts-1920.jpg';
+import modernisedLifts from '../assets/photos/modernised-lifts.jpg';
+import liftMotorRoomWide from '../assets/photos/lift-motor-room-1920.jpg';
 import liftMotorRoom from '../assets/photos/lift-motor-room.jpg';
 import projectEetvilla from '../assets/photos/project-eetvilla.jpg';
 import projectGravenhof from '../assets/photos/project-gravenhof.jpg';
@@ -13,6 +22,8 @@ import projectStudentHotel from '../assets/photos/project-student-hotel.jpg';
 
 export type Photo = {
 	src: string;
+	/** 1920px version for full-bleed use */
+	wide?: string;
 	width: number;
 	height: number;
 	alt: string;
@@ -20,12 +31,47 @@ export type Photo = {
 };
 
 const ccBySa4 = { license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' };
+const ccBySa3 = { license: 'CC BY-SA 3.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/' };
+const ccBy2 = { license: 'CC BY 2.0', licenseUrl: 'https://creativecommons.org/licenses/by/2.0/' };
 const ccBy4 = { license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/' };
 const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${file}`;
 
 export const photos = {
+	liftDoors: {
+		src: liftDoors,
+		wide: liftDoorsWide,
+		width: 960,
+		height: 709,
+		alt: 'Roestvrijstalen liftdeuren in een marmeren omlijsting',
+		credit: { author: 'AndyB', ...ccBySa3, source: commons('Mutual_Building_Cape_Town_032.jpg') }
+	},
+	modernisedLifts: {
+		src: modernisedLifts,
+		wide: modernisedLiftsWide,
+		width: 960,
+		height: 720,
+		alt: 'Twee liften in een stationshal na modernisering',
+		credit: {
+			author: 'Baron Maddock',
+			...ccBy4,
+			source: commons('The_Clark_Street_subway_station_elevators_post_modernization.jpg')
+		}
+	},
+	liftInstallation: {
+		src: liftInstallation,
+		wide: liftInstallationWide,
+		width: 960,
+		height: 720,
+		alt: 'Nieuwe lift in aanbouw, gezien van boven in de schacht',
+		credit: {
+			author: 'MTA Capital Construction',
+			...ccBy2,
+			source: commons('West_cavern_elevator_installation._(CM007,_03-21-2019)_(33565520878).jpg')
+		}
+	},
 	liftMachine: {
 		src: liftMachine,
+		wide: liftMachineWide,
 		width: 960,
 		height: 1280,
 		alt: 'Liftmachine met aandrijving in een machinekamer',
@@ -37,6 +83,7 @@ export const photos = {
 	},
 	controllerCabinets: {
 		src: controllerCabinets,
+		wide: controllerCabinetsWide,
 		width: 960,
 		height: 720,
 		alt: 'Besturingskasten in een liftmachinekamer',
@@ -48,6 +95,7 @@ export const photos = {
 	},
 	liftMotorRoom: {
 		src: liftMotorRoom,
+		wide: liftMotorRoomWide,
 		width: 960,
 		height: 720,
 		alt: 'Liftmachines naast elkaar in een machinekamer',

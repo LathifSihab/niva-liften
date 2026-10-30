@@ -5,7 +5,7 @@
 	let { post, level = 3 }: { post: Post; level?: 2 | 3 } = $props();
 </script>
 
-<article class="news-item">
+<article class="card news-item">
 	<p class="label">
 		<time class="num" datetime={post.date}>{formatDate(post.date)}</time> · {post.category}
 	</p>
@@ -13,14 +13,22 @@
 		<a href="/nieuws/{post.slug}">{post.title}</a>
 	</svelte:element>
 	<p class="excerpt">{post.excerpt}</p>
+	<p class="more" aria-hidden="true">Lees meer</p>
 </article>
 
 <style>
 	.news-item {
+		position: relative;
 		display: grid;
-		gap: var(--space-8);
-		padding-block: var(--space-24);
-		border-top: 1px solid var(--color-line);
+		align-content: start;
+		gap: var(--space-12);
+		height: 100%;
+		padding: var(--space-32);
+		transition: box-shadow 0.2s;
+	}
+
+	.news-item:hover {
+		box-shadow: var(--shadow-card-hover);
 	}
 
 	a {
@@ -28,17 +36,29 @@
 		text-decoration: none;
 	}
 
-	a:hover {
+	/* Whole card clickable via the title link */
+	a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.news-item:hover a {
 		color: var(--color-teal);
-		text-decoration: underline;
 	}
 
 	.excerpt {
 		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		line-clamp: 2;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		color: var(--color-steel);
+	}
+
+	.more {
+		margin-top: var(--space-8);
+		color: var(--color-teal);
+		font-weight: 600;
 	}
 </style>

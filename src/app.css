@@ -37,7 +37,9 @@
 	--space-96: 6rem;
 	--space-128: 8rem;
 
-	--radius: 2px;
+	--radius: 4px;
+	--shadow-card: 0 1px 2px rgb(11 31 58 / 0.06), 0 8px 24px rgb(11 31 58 / 0.08);
+	--shadow-card-hover: 0 2px 4px rgb(11 31 58 / 0.08), 0 16px 40px rgb(11 31 58 / 0.14);
 	--gutter: var(--space-24);
 	--side: var(--space-16);
 	--header-h: 4.5rem;
@@ -242,6 +244,103 @@ a:hover {
 	background: var(--color-surface);
 }
 
+/* Centred section title with one bold word: "Onze <strong>Diensten</strong>" */
+.section-title {
+	margin-bottom: var(--space-48);
+	font-weight: 500;
+	text-align: center;
+}
+
+.section-title strong {
+	font-weight: 700;
+}
+
+.section-actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-12);
+	margin-top: var(--space-48);
+}
+
+/* Text block inside a PageHero on inner pages */
+.hero-intro {
+	display: grid;
+	justify-items: start;
+	gap: var(--space-24);
+	max-width: 44rem;
+}
+
+/* Text left, card right */
+.two-col {
+	display: grid;
+	gap: var(--space-48);
+	align-items: start;
+}
+
+.two-col h2 {
+	margin-bottom: var(--space-16);
+}
+
+.two-col p + p {
+	margin-top: var(--space-16);
+}
+
+.three-up {
+	display: grid;
+	gap: var(--space-32) var(--gutter);
+}
+
+@media (min-width: 640px) {
+	.three-up {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 960px) {
+	.two-col {
+		grid-template-columns: 7fr 5fr;
+		gap: var(--space-96);
+	}
+
+	.three-up {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.card-body {
+	padding: var(--space-32);
+}
+
+.card-body > .label {
+	margin-bottom: var(--space-16);
+}
+
+/* White card with a soft shadow */
+.card {
+	border-radius: var(--radius);
+	background: var(--color-white);
+	box-shadow: var(--shadow-card);
+}
+
+a.card {
+	color: inherit;
+	text-decoration: none;
+	transition:
+		box-shadow 0.2s,
+		transform 0.2s;
+}
+
+a.card:hover {
+	box-shadow: var(--shadow-card-hover);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	a.card:hover {
+		transform: translateY(-2px);
+	}
+}
+
 .plain-list {
 	list-style: none;
 	padding: 0;
@@ -289,25 +388,20 @@ a:hover {
 	background: var(--color-teal-deep);
 }
 
+/* White button, as in the client's mockup; works on light and dark backgrounds */
 .button-secondary {
-	border-color: var(--color-navy);
-	background: transparent;
+	border-color: var(--color-line);
+	background: var(--color-white);
 	color: var(--color-navy);
 }
 
 .button-secondary:hover {
-	background: var(--color-navy);
-	color: var(--color-white);
+	border-color: var(--color-navy);
 }
 
-.on-dark .button-secondary {
-	border-color: var(--color-white);
-	color: var(--color-white);
-}
-
-.on-dark .button-secondary:hover {
-	background: var(--color-white);
-	color: var(--color-navy);
+.button-primary,
+.button-secondary {
+	box-shadow: 0 1px 2px rgb(11 31 58 / 0.12);
 }
 
 /* 24/7 storing only. Navy text on amber. */

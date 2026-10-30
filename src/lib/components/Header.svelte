@@ -11,6 +11,13 @@
 	const isCurrent = (href: string) => !href.includes('#') && page.url.pathname.startsWith(href);
 </script>
 
+<div class="topbar on-dark small">
+	<div class="container topbar-inner">
+		<p>Merkonafhankelijk liftonderhoud sinds 2005</p>
+		<p><span class="topbar-label">24/7 storingsdienst</span> <Phone /></p>
+	</div>
+</div>
+
 <header class="site-header">
 	<div class="container bar">
 		<!-- Wordmark stand-in until the client's logo SVG arrives -->
@@ -21,17 +28,28 @@
 		<nav class="nav-desktop" aria-label="Hoofdmenu">
 			<ul class="plain-list">
 				{#each nav as item (item.href)}
-					<li>
+					<li class:has-sub={item.children}>
 						<a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
 							{item.label}
 						</a>
+						{#if item.children}
+							<!-- Opens on hover and keyboard focus; no JS needed -->
+							<ul class="plain-list sub card">
+								{#each item.children as child (child.href)}
+									<li>
+										<a href={child.href} aria-current={isCurrent(child.href) ? 'page' : undefined}>
+											{child.title}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						{/if}
 					</li>
 				{/each}
 			</ul>
 		</nav>
 
 		<div class="actions">
-			<Phone class="phone" />
 			<a class="button button-signal" href="/contact#storing">Storing melden 24/7</a>
 		</div>
 
@@ -54,7 +72,16 @@
 				<nav class="container" aria-label="Hoofdmenu mobiel">
 					<ul class="plain-list">
 						{#each nav as item (item.href)}
-							<li><a href={item.href}>{item.label}</a></li>
+							<li>
+								<a href={item.href}>{item.label}</a>
+								{#if item.children}
+									<ul class="plain-list menu-sub">
+										{#each item.children as child (child.href)}
+											<li><a href={child.href}>{child.title}</a></li>
+										{/each}
+									</ul>
+								{/if}
+							</li>
 						{/each}
 					</ul>
 					<div class="menu-storing">
@@ -126,7 +153,7 @@
 		display: none;
 	}
 
-	.nav-desktop ul {
+	.nav-desktop > ul {
 		display: flex;
 		gap: var(--space-24);
 	}
@@ -145,14 +172,93 @@
 		text-decoration: underline;
 	}
 
-	.actions {
-		align-items: center;
-		gap: var(--space-24);
+	.has-sub {
+		position: relative;
 	}
 
-	.actions :global(.phone) {
+	.has-sub > a::after {
+		content: '';
+		display: inline-block;
+		width: 0.4em;
+		height: 0.4em;
+		margin-left: 0.45em;
+		border-right: 1.5px solid currentColor;
+		border-bottom: 1.5px solid currentColor;
+		transform: translateY(-0.2em) rotate(45deg);
+	}
+
+	.sub {
+		position: absolute;
+		top: 100%;
+		left: calc(-1 * var(--space-16));
 		display: none;
+		min-width: 15rem;
+		padding: var(--space-8);
+		/* Bridge the gap so the menu stays open while the pointer moves down */
+		margin-top: var(--space-8);
+	}
+
+	.sub::before {
+		content: '';
+		position: absolute;
+		inset: calc(-1 * var(--space-16)) 0 auto;
+		height: var(--space-16);
+	}
+
+	.has-sub:hover .sub,
+	.has-sub:focus-within .sub {
+		display: grid;
+	}
+
+	.sub a {
+		display: block;
+		padding: var(--space-8) var(--space-12);
+		border-radius: var(--radius);
+		text-decoration: none;
+	}
+
+	.sub a:hover {
+		background: var(--color-surface);
+		text-decoration: none;
+	}
+
+	.menu-sub {
+		display: grid;
+		gap: var(--space-4);
+		margin: var(--space-8) 0 var(--space-12) var(--space-16);
+	}
+
+	.menu-panel .menu-sub a {
+		font-family: var(--font-body);
+		font-size: var(--text-body-lg);
+		font-weight: 400;
+		color: var(--color-teal-mist);
+	}
+
+	.topbar {
+		display: none;
+	}
+
+	.topbar-inner {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-24);
+		padding-block: var(--space-8);
+	}
+
+	.topbar p {
+		max-width: none;
+		color: var(--color-teal-mist);
+	}
+
+	.topbar-label {
+		margin-right: var(--space-8);
+		color: var(--color-white);
 		font-weight: 600;
+	}
+
+	.actions {
+		align-items: center;
 	}
 
 	.icon-button {
@@ -188,7 +294,7 @@
 		gap: var(--space-8);
 	}
 
-	.menu-panel li a {
+	.menu-panel > nav > ul > li > a {
 		font-family: var(--font-heading);
 		font-size: var(--text-h2);
 		font-weight: 700;
@@ -209,6 +315,11 @@
 	}
 
 	@media (min-width: 960px) {
+		/* Only where the fixed mobile menu (positioned below --header-h) is not used */
+		.topbar {
+			display: block;
+		}
+
 		.nav-desktop,
 		.actions {
 			display: flex;
@@ -228,9 +339,4 @@
 		}
 	}
 
-	@media (min-width: 1280px) {
-		.actions :global(.phone) {
-			display: inline;
-		}
-	}
 </style>

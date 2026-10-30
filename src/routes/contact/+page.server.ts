@@ -1,9 +1,15 @@
 import { fail } from '@sveltejs/kit';
-import { validateContact } from '#lib/contact.ts';
-import type { Actions } from './$types';
+import { requestTypes, validateContact } from '#lib/contact.ts';
+import type { Actions, PageServerLoad } from './$types';
 
 // The form posts here, so this page runs on the worker instead of being prerendered.
 export const prerender = false;
+
+// CTA links preselect the request type: /contact?type=Onderhoud
+export const load: PageServerLoad = ({ url }) => {
+	const type = url.searchParams.get('type') ?? '';
+	return { type: requestTypes.includes(type) ? type : '' };
+};
 
 export const actions: Actions = {
 	default: async ({ request }) => {

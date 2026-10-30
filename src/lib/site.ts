@@ -11,27 +11,78 @@ export const contact = {
 	kvk: null as string | null
 };
 
-export const nav = [
-	{ label: 'Diensten', href: '/#diensten' },
-	{ label: 'Projecten', href: '/projecten' },
-	{ label: 'Over ons', href: '/#over-niva' },
-	{ label: 'Nieuws', href: '/nieuws' },
-	{ label: 'Contact', href: '/contact' }
-];
+export type ServiceIconName = 'onderhoud' | 'reparatie' | 'modernisering' | 'nieuwbouw';
 
-// Only Liftmodernisering has a page in the demo; the rest follow in phase 2.
-export const services: { title: string; text: string; href?: string }[] = [
-	{ title: 'Liftonderhoud', text: 'Periodiek onderhoud voor elk merk, ook marktvrije liften.' },
+// Short texts follow the client's mockup ("Onze Diensten")
+export const services: { title: string; text: string; href: string; icon: ServiceIconName }[] = [
 	{
-		title: 'Reparatie & storingen',
-		text: '24/7 bereikbaar bij storingen en opsluitingen. Met eigen monteurs.'
+		title: 'Liftonderhoud',
+		text: 'Regelmatig onderhoud voor een betrouwbare lift, voor alle merken.',
+		href: '/diensten/liftonderhoud',
+		icon: 'onderhoud'
+	},
+	{
+		title: 'Liftreparatie',
+		text: 'Snelle hulp bij storingen en defecten, 24/7 bereikbaar.',
+		href: '/diensten/lift-reparatie',
+		icon: 'reparatie'
 	},
 	{
 		title: 'Liftmodernisering',
-		text: 'Besturing, machine, deuren of tableaus vernieuwen in plaats van de hele lift vervangen.',
-		href: '/diensten/liftmodernisering'
+		text: 'Uw verouderde lift weer als nieuw, met marktvrije onderdelen.',
+		href: '/diensten/liftmodernisering',
+		icon: 'modernisering'
 	},
-	{ title: 'Nieuwbouw', text: 'Nieuwe liftinstallaties, waaronder de corporatielift type Mars.' }
+	{
+		title: 'Nieuwbouw',
+		text: 'Nieuwe liftinstallaties op maat, van corporatielift tot homelift.',
+		href: '/diensten/nieuwbouw',
+		icon: 'nieuwbouw'
+	}
+];
+
+export const nav = [
+	{ label: 'Diensten', href: '/#diensten', children: services },
+	{ label: 'Projecten', href: '/projecten' },
+	{ label: 'Over ons', href: '/over-niva-liften' },
+	{ label: 'Nieuws', href: '/nieuws' },
+	{ label: 'Vacatures', href: '/vacatures' },
+	{ label: 'Contact', href: '/contact' }
+];
+
+// "Waarom Nivå Liften?" from the client's mockup and Framework
+export const reasons = [
+	'Merkonafhankelijk',
+	'Technische expertise',
+	'Snelle service',
+	'Eigen monteurs',
+	'Maatwerk oplossingen',
+	'Verantwoordelijk'
+];
+
+// "Waarom kiezen klanten voor Nivå?", Bedrijfspresentatie p.5
+export const clientReasons = [
+	'Korte lijnen',
+	'Kennis van grote merken: Otis, Kone, Thyssen, Schindler en Mitsubishi',
+	'Marktconforme prijzen',
+	'Marktvrije producten',
+	'Klantenportaal 24/7'
+];
+
+// Ontwikkeling Nivå, Bedrijfspresentatie p.3
+export const growth = [
+	{ label: 'Installaties in onderhoud', then: '2', now: '1.200' },
+	{ label: 'Medewerkers in dienst', then: '1', now: '25' },
+	{ label: 'Klanten', then: '2', now: '700+' }
+];
+
+// De Corporatielift type Mars, Bedrijfspresentatie p.9
+export const marsSpecs = [
+	{ label: 'Hefvermogen', value: '≤ 2.500 kg' },
+	{ label: 'Snelheid', value: '≤ 1,60 m/s' },
+	{ label: 'Hoogte', value: '≤ 45 meter' },
+	{ label: 'Putdiepte', value: '≥ 400 mm' },
+	{ label: 'Schachttop', value: '≥ 2.500 mm' }
 ];
 
 export const stats = [
@@ -43,15 +94,28 @@ export const stats = [
 
 export const brands = ['Otis', 'Kone', 'Thyssen', 'Schindler', 'Mitsubishi'];
 
-export const suppliers = [
-	'KLST',
-	'Fuji Electric',
-	'NewLift',
-	'Ziehl-Abegg',
-	'Schaefer',
-	'Wittur',
-	'Meiller',
-	'Fermator'
+// Toegepaste producten, Bedrijfspresentatie p.7 and p.10–12
+export const parts = [
+	{
+		title: 'Besturing en regelaar',
+		text: 'De besturing bepaalt hoe de lift rijdt en op oproepen reageert.',
+		suppliers: ['KLST', 'Fuji Electric', 'NewLift']
+	},
+	{
+		title: 'Machine',
+		text: 'De aandrijving die de kooi beweegt.',
+		suppliers: ['Ziehl-Abegg', 'Alberto Sassi']
+	},
+	{
+		title: 'Deuren',
+		text: 'Schachtdeuren en kooideuren, inclusief de deuraandrijving.',
+		suppliers: ['Wittur', 'Meiller', 'Fermator']
+	},
+	{
+		title: 'Drukknoptableaus',
+		text: 'De bediening in de kooi en op de verdiepingen.',
+		suppliers: ['Schaefer']
+	}
 ];
 
 export type Project = {
@@ -63,18 +127,19 @@ export type Project = {
 	featured?: boolean;
 };
 
+// Projects 2024–2025, Bedrijfspresentatie p.6 (modernisering) and p.8 (nieuwbouw)
 export const projects: Project[] = [
 	{
 		name: "VvE 's Gravenhof",
 		location: 'Roermond',
-		category: null,
-		scope: null,
+		category: 'Modernisering',
+		scope: 'Modernisering compleet',
 		photo: photos.projectGravenhof,
 		featured: true
 	},
 	{
 		name: 'Student Hotel',
-		location: null,
+		location: 'Rotterdam, Den Haag en Maastricht',
 		category: 'Modernisering',
 		scope: '7× modernisering compleet',
 		photo: photos.projectStudentHotel,
@@ -82,36 +147,44 @@ export const projects: Project[] = [
 	},
 	{
 		name: 'Stadlander',
-		location: 'Bergen op Zoom',
+		location: 'Diverse locaties, Bergen op Zoom',
 		category: 'Nieuwbouw',
-		scope: '10 nieuwe liften',
+		scope: '10 nieuwe corporatieliften',
 		photo: photos.projectStadlander,
 		featured: true
 	},
 	{
 		name: 'Meander',
 		location: 'Arnhem',
-		category: null,
-		scope: null,
+		category: 'Modernisering',
+		scope: 'Modernisering besturing en buffers',
 		photo: photos.projectMeander
 	},
 	{
 		name: 'Eetvilla',
 		location: 'Rosmalen',
-		category: null,
-		scope: null,
+		category: 'Nieuwbouw',
+		scope: '1 nieuwe goederenlift',
 		photo: photos.projectEetvilla
 	},
 	{
 		name: 'Huisartsenpraktijk',
 		location: 'Boxtel',
-		category: null,
-		scope: null,
+		category: 'Nieuwbouw',
+		scope: '1 nieuwe homelift',
 		photo: photos.projectHuisartsenpraktijk
 	}
 ];
 
-export const team = ['Hasan Koç', 'Mario Leijen', 'Ebad Hashemi'];
+// Bedrijfspresentatie p.4
+export const team = [
+	{ name: 'Hasan Koç', role: 'Commercie, communicatie en marketing' },
+	{ name: 'Mario Leijen', role: 'HR, finance en inkoop' },
+	{ name: 'Ebad Hashemi', role: 'Operatie' }
+];
+
+// The company's own statement, Bedrijfspresentatie p.3
+export const values = 'Wij staan voor deskundigheid, klantgerichtheid, betrouwbaarheid en professionaliteit.';
 
 const dateFormat = new Intl.DateTimeFormat('nl-NL', {
 	day: 'numeric',

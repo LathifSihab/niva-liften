@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import PageHeader from '#lib/components/PageHeader.svelte';
 	import Phone from '#lib/components/Phone.svelte';
 	import { liftBrands, requestTypes, type ContactField } from '#lib/contact.ts';
 	import { contact, PLACEHOLDER } from '#lib/site.ts';
 
-	let { form } = $props();
+	let { data, form } = $props();
 
-	const value = (field: ContactField) => form?.values?.[field] ?? '';
+	const value = (field: ContactField) =>
+		form?.values?.[field] ?? (field === 'type' ? data.type : '');
 	const error = (field: ContactField) => form?.errors?.[field];
 	const describedBy = (field: ContactField) => (error(field) ? `${field}-error` : undefined);
 </script>
@@ -25,14 +27,15 @@
 	{/if}
 {/snippet}
 
+<PageHeader
+	eyebrow="Contact"
+	title="Onderhoud aanvragen of een vraag stellen"
+	lead="Vul het formulier in, dan nemen wij contact met u op. Storing? Bel direct onze 24/7 storingsdienst."
+/>
+
 <section class="section tight">
 	<div class="container layout">
 		<div>
-			<h1>Contact</h1>
-			<p class="lead intro">
-				Heeft u een vraag over uw lift, of wilt u onderhoud of een offerte aanvragen? Vul het
-				formulier in, dan nemen wij contact met u op.
-			</p>
 
 			{#if form && 'sent' in form}
 				<div class="sent" role="status">
@@ -167,10 +170,6 @@
 	.layout {
 		display: grid;
 		gap: var(--space-64);
-	}
-
-	.intro {
-		margin-block: var(--space-16) var(--space-48);
 	}
 
 	form {
